@@ -1,75 +1,55 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cstring>
 #include <vector>
 using namespace std;
 
 class Solution {
 public:
-	double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) 
+	vector<vector<int>> test(vector<int>& nums1, vector<int>& nums2) 
 	{
-		int size1 = nums1.size(), size2 = nums2.size(),
-			n1 = 0, n2 = 0,
-			middle1 = 0, middle2 = 0,
-			middle = (size1 + size2) / 2,
-			flag = (size1 + size2) & 1;
-		if (size1 == 0) 
+		int size = nums1.size();
+		vector<int> temp;
+		vector<vector<int>> value;
+		value.push_back(temp);
+		value.push_back(temp);
+		for (int i = 0; i < size; i++)
 		{
-			if (size2 & 1) 
-			{
-				return nums2[size2 / 2];
-			}
-			else 
-			{
-				return (nums2[size2 / 2] + nums2[size2 / 2 - 1]) * 1.0 / 2;
-			}
+			value[0].push_back(nums1[i] * nums2[i]);
+			value[1].push_back(nums1[i] + nums2[i]);
 		}
-		if (size2 == 0)
-		{
-			if (size1 & 1)
-			{
-				return nums1[size1 / 2];
-			}
-			else
-			{
-				return (nums1[size1 / 2] + nums1[size1 / 2 - 1]) * 1.0 / 2;
-			}
-		}
-		for (int i = 0; i <= middle; i++)
-		{
-			middle2 = middle1;
-			if (n1 < size1 && n2 < size2)
-			{
-				nums1[n1] < nums2[n2] ? middle1 = nums1[n1++] : middle1 = nums2[n2++];
-			}
-			else if (n1 == size1 && n2 < size2)
-			{
-				middle1 = nums2[n2++];
-			}
-			else if (n2 == size2 && n1 < size1)
-			{
-				middle1 = nums1[n1++];
-			}
-		}
- 		if (flag) 
-		{
-			return middle1;
-		}
-		else 
-		{
-			return (middle2 + middle1)*1.0 / 2;
-		}
+		return value;
 	}
 };
 
 int main(void)
-{
-	vector<int> t1, t2;
-	t1.push_back(2);
-	t1.push_back(3);
-	t1.push_back(4);
-	t2.push_back(1);
+{	
 	Solution a;
-	cout << a.findMedianSortedArrays(t1,t2) <<endl;
-	system("pause");
+	int in_temp;
+	vector<int> in_o, out_o;
+	vector<vector<int>> in_t, out_t;
+	ifstream main_in("main_in.txt");
+	ofstream main_out("main_out.txt");
+	string stemp;
+	while(getline(main_in, stemp))
+	{
+		stringstream ss;
+		ss << stemp;
+		while(!ss.eof())
+		{
+			ss >> in_temp;
+			in_o.push_back(in_temp);
+		}
+		in_t.push_back(in_o);
+		in_o.clear();
+	}
+	out_t = a.test(in_t[0], in_t[1]);
+	for(auto i : out_t)
+	{
+		for(auto j : i)
+			main_out << j << ' ';
+		main_out << endl;
+	}
 	return 0;
 }
