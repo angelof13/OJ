@@ -1,17 +1,17 @@
-#include "ioOperate.h"
+#include "IOOperate.h"
 
-ioOperate::ioOperate()
+IOOperate::IOOperate()
 {
 	in.open("main_in.txt");
 	out.open("main_out.txt");
 }
-ioOperate::~ioOperate()
+IOOperate::~IOOperate()
 {
 	in.close();
 	out.close();
 }
 
-void ioOperate::read(vector<int>& int_o)
+void IOOperate::read(vector<int>& int_o)
 {
 	int in_temp;
 	string stemp;
@@ -24,7 +24,7 @@ void ioOperate::read(vector<int>& int_o)
 		int_o.push_back(in_temp);
 	}
 }
-void ioOperate::read(vector<vector<int>>& int_t) 
+void IOOperate::read(vector<vector<int>>& int_t) 
 {
 	int in_temp;
 	vector<int> in_o;
@@ -42,7 +42,7 @@ void ioOperate::read(vector<vector<int>>& int_t)
 		in_o.clear();
 	}
 }
-void ioOperate::read(vector<vector<char>>& char_t) 
+void IOOperate::read(vector<vector<char>>& char_t) 
 {
 	char temp;
 	vector<char> char_o;
@@ -60,7 +60,7 @@ void ioOperate::read(vector<vector<char>>& char_t)
 		char_o.clear();
 	}
 }
-void ioOperate::read(vector<string>& string_t)
+void IOOperate::read(vector<string>& string_t)
 {
 	int in_temp;
 	string stemp;
@@ -70,7 +70,7 @@ void ioOperate::read(vector<string>& string_t)
 	}
 }
 
-void ioOperate::read(ListNode* head)
+void IOOperate::read(ListNode* head)
 {	
 	int i = 0, int_temp = 0;
 	string stemp;
@@ -99,14 +99,14 @@ void ioOperate::read(ListNode* head)
 }
 
 
-void ioOperate::write(vector<int>& int_o) 
+void IOOperate::write(vector<int>& int_o) 
 {
 	for (auto i : int_o)
 	{
 		out << i << " ";
 	}
 }
-void ioOperate::write(vector<vector<int>>& int_t) 
+void IOOperate::write(vector<vector<int>>& int_t) 
 {
 	for (auto i : int_t)
 	{
@@ -115,7 +115,7 @@ void ioOperate::write(vector<vector<int>>& int_t)
 		out << endl;
 	}
 }
-void ioOperate::write(vector<vector<char>>& char_t)
+void IOOperate::write(vector<vector<char>>& char_t)
 {
 	for (auto i : char_t)
 	{
@@ -124,7 +124,7 @@ void ioOperate::write(vector<vector<char>>& char_t)
 		out << endl;
 	}
 }
-void ioOperate::write(vector<string>& string_t)
+void IOOperate::write(vector<string>& string_t)
 {
 	for (auto i : string_t)
 	{
@@ -132,17 +132,17 @@ void ioOperate::write(vector<string>& string_t)
 	}
 }
 
-void ioOperate::write(bool& b)
+void IOOperate::write(bool& b)
 {
 	out << b << endl;
 }
 
-void ioOperate::write(bool& b, string TRUE, string FALSE)
+void IOOperate::write(bool& b, string TRUE, string FALSE)
 {
 	out << (b ? TRUE : FALSE) << endl;
 }
 
-void ioOperate::write(ListNode* head)
+void IOOperate::write(ListNode* head)
 {
 	ListNode *temp = head;
 	while (true)

@@ -1,6 +1,8 @@
 #include <iostream>
-#include "ioOperate.h"
 #include <vector>
+
+#include "Parameter.h"
+#include "IOOperate.h"
 using namespace std;
 
 class Solution {
@@ -10,18 +12,13 @@ public:
 	}
 };
 
-
-
 int main(void)
 {	
 	Solution a;
-	ioOperate io;
-	vector<int> in1,out1;
-	vector<vector<int>>in2, out2;
-	vector<string> ins,outs;
-	ListNode* head = new ListNode();
-	io.read(in1);
-	a.function(&in1);
-	io.write(in1);
+	IOOperate io;
+	Parameter p;
+	io.read(p.head);
+	a.function(&p.head);
+	io.write(p.head);
 	return 0;
 }

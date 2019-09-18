@@ -5,22 +5,17 @@
 #include <sstream>
 #include <vector>
 #include <cstring>
+
+#include "Parameter.h"
 using namespace std;
 
-struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode() :val(0),next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-};
-
-class ioOperate {
+class IOOperate {
 private:
 	ifstream in;
 	ofstream out;
 public:
-	ioOperate();
-	~ioOperate();
+	IOOperate();
+	~IOOperate();
 	void read(vector<int> &int_o);
 	void read(vector<vector<int>>& int_t);
 	void read(vector<vector<char>>& char_t);
