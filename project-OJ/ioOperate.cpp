@@ -70,6 +70,34 @@ void ioOperate::read(vector<string>& string_t)
 	}
 }
 
+void ioOperate::read(ListNode* head)
+{	
+	int i = 0, int_temp = 0;
+	string stemp;
+	ListNode *node = head;
+	while (getline(in, stemp))
+	{
+		stringstream ss;
+		ss << stemp;
+		while (!ss.eof())
+		{
+			ss >> int_temp;
+			if (i == 0)
+			{
+				node->val = int_temp;
+				i = 1;
+			}
+			else
+			{
+				ListNode* temp = new ListNode;
+				temp->val = int_temp;
+				node->next = temp;
+				node = node->next;
+			}
+		}
+	}
+}
+
 
 void ioOperate::write(vector<int>& int_o) 
 {
@@ -112,4 +140,31 @@ void ioOperate::write(bool& b)
 void ioOperate::write(bool& b, string TRUE, string FALSE)
 {
 	out << (b ? TRUE : FALSE) << endl;
+}
+
+void ioOperate::write(ListNode* head)
+{
+	ListNode *temp = head;
+	while (true)
+	{
+		out << temp->val << " ";
+		if (temp->next == nullptr)
+		{
+			break;
+		}
+		temp = temp->next;
+	}
+	out << endl;
+	while (true)
+	{
+		temp = head;
+		if (temp->next == nullptr)
+		{
+			delete temp;
+			break;
+		}
+		head = head->next;
+		delete temp;
+
+	}
 }
