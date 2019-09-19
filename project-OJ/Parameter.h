@@ -2,6 +2,7 @@
 #define __PARAMETER
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <cstring>
 using namespace std;
 struct ListNode {
@@ -11,8 +12,16 @@ struct ListNode {
 	ListNode(int x) : val(x), next(nullptr) {}
 };
 
+struct TreeNode {
+	int val;
+	TreeNode* left;
+	TreeNode* right;
+	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
 class Parameter {
 public:
+	bool b;
 	int i1, i2, i3;
 	char c1, c2, c3;
 	string s1, s2, s3;
@@ -20,6 +29,7 @@ public:
 	vector<vector<int>> vvi1, vvi2, vvi3;
 	vector<string> vs1, vs2, vs3;
 	ListNode* head = new ListNode();
+	TreeNode* root = new TreeNode(0);
 };
 #endif
 #pragma once

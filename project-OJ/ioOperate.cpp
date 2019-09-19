@@ -18,7 +18,7 @@ void IOOperate::read(vector<int>& int_o)
 	stringstream ss;
 	getline(in, stemp);
 	ss << stemp;
-	while (!ss.eof())
+	while (ss.peek() != EOF)
 	{
 		ss >> in_temp;
 		int_o.push_back(in_temp);
@@ -33,7 +33,7 @@ void IOOperate::read(vector<vector<int>>& int_t)
 	{
 		stringstream ss;
 		ss << stemp;
-		while (!ss.eof())
+		while (ss.peek() != EOF)
 		{
 			ss >> in_temp;
 			in_o.push_back(in_temp);
@@ -51,7 +51,7 @@ void IOOperate::read(vector<vector<char>>& char_t)
 	{
 		stringstream ss;
 		ss << stemp;
-		while (!ss.eof())
+		while (ss.peek() != EOF)
 		{
 			ss >> temp;
 			char_o.push_back(temp);
@@ -79,7 +79,7 @@ void IOOperate::read(ListNode* head)
 	{
 		stringstream ss;
 		ss << stemp;
-		while (!ss.eof())
+		while (ss.peek() != EOF)
 		{
 			ss >> int_temp;
 			if (i == 0)
@@ -93,6 +93,50 @@ void IOOperate::read(ListNode* head)
 				temp->val = int_temp;
 				node->next = temp;
 				node = node->next;
+			}
+		}
+	}
+}
+
+void IOOperate::read(TreeNode* root)
+{
+	int flag = -1,int_temp;
+	char char_temp;
+	string stemp;
+	TreeNode* node = root;
+	queue<TreeNode*> list;
+	while (getline(in, stemp))
+	{
+		stringstream ss;
+		ss << stemp;
+		while (ss.peek() != EOF)
+		{
+			ss >> char_temp;
+			int_temp = char_temp - '0';
+			if (flag == -1)
+			{
+				node->val = int_temp;
+				list.push(node);
+				flag = 0;
+			}
+			else
+			{
+				TreeNode* temp = new TreeNode(int_temp);
+				if (flag) {
+					if (char_temp != '$') {
+						node->right = temp;
+						list.push(temp);
+					}
+					list.pop();
+				}
+				else {
+					node = list.front();
+					if (char_temp != '$'){
+						node->left = temp;
+						list.push(temp);
+					}
+				}
+				flag = !flag;
 			}
 		}
 	}
@@ -166,5 +210,45 @@ void IOOperate::write(ListNode* head)
 		head = head->next;
 		delete temp;
 
+	}
+}
+
+void IOOperate::write(TreeNode* root)
+{
+	int num = 1,eflag = 0;
+	queue<TreeNode*> list;
+	list.push(root);
+	while (list.size()) {
+		for (int i = 0; i < num; i++) {
+			if (list.front() != nullptr) {
+				out << list.front()->val << ' ';
+				if (list.front()->left != nullptr) {
+					list.push(list.front()->left);
+				}
+				else {
+					list.push(nullptr);
+					eflag++;
+				}
+				if (list.front()->right != nullptr) {
+					list.push(list.front()->right);
+				}
+				else {
+					list.push(nullptr);
+					eflag++;
+				}
+			}
+			else {
+				out << '$'<< ' ';
+				list.push(nullptr);
+				list.push(nullptr);
+				eflag++;
+			}
+			list.pop();
+		}
+		num = list.size();
+		if (eflag == num) {
+			break;
+		}
+		out << endl;
 	}
 }

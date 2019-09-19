@@ -21,6 +21,7 @@ public:
 	void read(vector<vector<char>>& char_t);
 	void read(vector<string>& string_t);
 	void read(ListNode* head);
+	void read(TreeNode* root);
 
 	void write(vector<int>& int_o);
 	void write(vector<vector<int>>& int_t);
@@ -29,6 +30,7 @@ public:
 	void write(bool& b);
 	void write(bool& b,string TRUE,string FALSE);
 	void write(ListNode* head);
+	void write(TreeNode* root);
 };
 #endif // !__IOOPERATE
 #pragma once
