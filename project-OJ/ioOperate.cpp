@@ -143,7 +143,17 @@ void IOOperate::read(TreeNode* root)
 }
 
 
-void IOOperate::write(vector<int>& int_o) 
+void IOOperate::write(int int_o)
+{
+	out << int_o;
+}
+
+void IOOperate::write(string s)
+{
+	out << s;
+}
+
+void IOOperate::write(vector<int>& int_o)
 {
 	for (auto i : int_o)
 	{

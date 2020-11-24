@@ -23,6 +23,8 @@ public:
 	void read(ListNode* head);
 	void read(TreeNode* root);
 
+	void write(int int_o);
+	void write(string s);
 	void write(vector<int>& int_o);
 	void write(vector<vector<int>>& int_t);
 	void write(vector<vector<char>>& char_t);
