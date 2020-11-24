@@ -23,6 +23,7 @@ class Parameter {
 public:
 	bool b;
 	int i1, i2, i3;
+	double d1, d2, d3;
 	char c1, c2, c3;
 	string s1, s2, s3;
 	vector<int> vi1, vi2, vi3;

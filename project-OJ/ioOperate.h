@@ -19,11 +19,13 @@ public:
 	void read(vector<int> &int_o);
 	void read(vector<vector<int>>& int_t);
 	void read(vector<vector<char>>& char_t);
+	void read(string& string_o);
 	void read(vector<string>& string_t);
 	void read(ListNode* head);
 	void read(TreeNode* root);
 
 	void write(int int_o);
+	void write(double double_o);
 	void write(string s);
 	void write(vector<int>& int_o);
 	void write(vector<vector<int>>& int_t);

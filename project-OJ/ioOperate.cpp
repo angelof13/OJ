@@ -59,10 +59,13 @@ void IOOperate::read(vector<vector<char>>& char_t)
 		char_t.push_back(char_o);
 		char_o.clear();
 	}
+}void IOOperate::read(string& string_o)
+{
+	string stemp;
+	getline(in, stemp);
 }
 void IOOperate::read(vector<string>& string_t)
 {
-	int in_temp;
 	string stemp;
 	while (getline(in, stemp))
 	{
@@ -142,10 +145,14 @@ void IOOperate::read(TreeNode* root)
 	}
 }
 
-
 void IOOperate::write(int int_o)
 {
 	out << int_o;
+}
+
+void IOOperate::write(double double_o)
+{
+	out << double_o;
 }
 
 void IOOperate::write(string s)
