@@ -11,6 +11,10 @@ IOOperate::~IOOperate()
 	out.close();
 }
 
+void IOOperate::read(int& i)
+{
+	in >> i;
+}
 void IOOperate::read(vector<int>& int_o)
 {
 	int in_temp;
@@ -61,8 +65,7 @@ void IOOperate::read(vector<vector<char>>& char_t)
 	}
 }void IOOperate::read(string& string_o)
 {
-	string stemp;
-	getline(in, stemp);
+	getline(in, string_o);
 }
 void IOOperate::read(vector<string>& string_t)
 {
@@ -72,14 +75,15 @@ void IOOperate::read(vector<string>& string_t)
 		string_t.push_back(stemp);
 	}
 }
-
-void IOOperate::read(ListNode* head)
-{	
-	int i = 0, int_temp = 0;
+void IOOperate::read(vector<ListNode*>& vh)
+{
+	int int_temp = 0;
 	string stemp;
-	ListNode *node = head;
 	while (getline(in, stemp))
 	{
+		int i = 0;
+		ListNode* head = new ListNode;
+		ListNode* node = head;
 		stringstream ss;
 		ss << stemp;
 		while (ss.peek() != EOF)
@@ -98,14 +102,42 @@ void IOOperate::read(ListNode* head)
 				node = node->next;
 			}
 		}
+		vh.push_back(head);
+	}
+}
+void IOOperate::read(ListNode*& head)
+{	
+	int i = 0, int_temp = 0;
+	string stemp;
+	head = new ListNode;
+	ListNode *node = head;
+	getline(in, stemp);
+	stringstream ss;
+	ss << stemp;
+	while (ss.peek() != EOF)
+	{
+		ss >> int_temp;
+		if (i == 0)
+		{
+			node->val = int_temp;
+			i = 1;
+		}
+		else
+		{
+			ListNode* temp = new ListNode;
+			temp->val = int_temp;
+			node->next = temp;
+			node = node->next;
+		}
 	}
 }
 
-void IOOperate::read(TreeNode* root)
+void IOOperate::read(TreeNode*& root)
 {
 	int flag = -1,int_temp;
 	char char_temp;
 	string stemp;
+	root = new TreeNode(0);
 	TreeNode* node = root;
 	queue<TreeNode*> list;
 	while (getline(in, stemp))
@@ -195,7 +227,7 @@ void IOOperate::write(vector<string>& string_t)
 
 void IOOperate::write(bool& b)
 {
-	out << b << endl;
+	out << (b ? "TRUE" : "FALSE") << endl;
 }
 
 void IOOperate::write(bool& b, string TRUE, string FALSE)

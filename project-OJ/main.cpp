@@ -8,20 +8,24 @@ using namespace std;
 
 class Solution {
 public:
-	string longestPalindrome(string s) {
-
+	int maxSubArray(vector<int>& nums) {
+		int temp = 0,max = nums[0];
+		for (auto i : nums)
+		{
+			temp = temp > 0 ? temp + i : i;
+			max = max > temp ? max : temp;
+		}
+		return max;
 	}
 };
-
-
 int main(void)
 {	
 	Solution a;
 	IOOperate io;
 	Parameter p;
-	io.read(p.s1);
-	p.s2 = a.longestPalindrome(p.s1);
-	io.write(p.s2);
+	io.read(p.vi1);
+	p.i1 = a.maxSubArray(p.vi1);
+	io.write(p.i1);
 	return 0;
 }
 

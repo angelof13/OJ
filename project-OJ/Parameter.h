@@ -29,8 +29,9 @@ public:
 	vector<int> vi1, vi2, vi3;
 	vector<vector<int>> vvi1, vvi2, vvi3;
 	vector<string> vs1, vs2, vs3;
-	ListNode* head = new ListNode();
-	TreeNode* root = new TreeNode(0);
+	vector<ListNode*> vh;
+	ListNode* head;
+	TreeNode* root;
 };
 #endif
 #pragma once
