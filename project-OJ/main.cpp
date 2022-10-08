@@ -6,8 +6,8 @@
 #include <algorithm>
 using namespace std;
 
-#define M_P_READ i1
-#define M_P_WRITE c1
+#define M_P_READ vh1
+#define M_P_WRITE vh1
 
 class Solution {
 public:
@@ -22,7 +22,9 @@ int main(void)
 	Parameter p;
 	io.read(p.M_P_READ);
 	//p.M_P_WRITE = a.groupAnagrams(p.vs1);
-	io.write(p.M_P_WRITE);
+	io.write(p.M_P_WRITE[0]);
+	io.write(p.M_P_WRITE[1]);
+	io.write(p.M_P_WRITE[2]);
 	return 0;
 }
 

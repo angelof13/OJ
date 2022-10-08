@@ -18,228 +18,253 @@ void IOOperate::read(int& i)
 void IOOperate::read(vector<int>& int_o)
 {
 	string stemp;
-	while (getline(in, stemp))
-	{
-		int in_temp = 0, sSize = stemp.size(), weight = 0;
-		for (int i = 0; i < sSize; i++) {
-			if (stemp[i] != ',' && stemp[i] != '[' && stemp[i] != ']') {
-				in_temp = in_temp * 10 + (stemp[i] - '0');
-			}
-			else if (stemp[i] == ',' || stemp[i] == ']') {
-				weight = 0;
-				int_o.push_back(in_temp);
-				in_temp = 0;
-			}
+	getline(in, stemp);
+	int int_temp = 0, sSize = stemp.size(), weight = 0;
+	for (int i = 0; i < sSize; i++) {
+		if ('0' <= stemp[i] && '9'>=stemp[i]) {
+			int_temp = int_temp * 10 + (stemp[i] - '0');
+		}
+		else if (stemp[i] == ',' || stemp[i] == ']') {
+			weight = 0;
+			int_o.push_back(int_temp);
+			int_temp = 0;
 		}
 	}
 }
-void IOOperate::read(vector<vector<int>>& int_t) 
+void IOOperate::read(vector<vector<int>>& int_t)
 {
 	string stemp;
-	while (getline(in, stemp))
-	{
-		vector<int> in_o;
-		int in_temp = 0, firVflag = 0, sSize = stemp.size(), weight = 0;
-		for (int i = 0; i < sSize; i++) {
-			if (stemp[i] == '[') {
-				firVflag++;
-			}
-			else if (stemp[i] == ']') {
-				firVflag--;
-				if (firVflag) {
-					weight = 0;
-					in_o.push_back(in_temp);
-					in_temp = 0;
+	getline(in, stemp);
+	vector<int> in_o;
+	int int_temp = 0, firVFlag = 0, sSize = stemp.size(), weight = 0;
+	for (int i = 0; i < sSize; i++) {
+		if (stemp[i] == '[') {
+			firVFlag++;
+		}
+		else if (stemp[i] == ']') {
+			firVFlag--;
+			if (firVFlag) {
+				weight = 0;
+				in_o.push_back(int_temp);
+				int_temp = 0;
 
-					int_t.push_back(in_o);
-					in_o.clear();
-				}
+				int_t.push_back(in_o);
+				in_o.clear();
 			}
-			else if (firVflag==2 && stemp[i] != ',') {
-				in_temp = in_temp * 10 + (stemp[i] - '0');
-			}
-			else if (firVflag == 2 && stemp[i] == ',') {
-				weight = 0;
-				in_o.push_back(in_temp);
-				in_temp = 0;
-			}
+		}
+		else if (firVFlag == 2 && '0' <= stemp[i] && '9' >= stemp[i]) {
+			int_temp = int_temp * 10 + (stemp[i] - '0');
+		}
+		else if (firVFlag == 2 && stemp[i] == ',') {
+			weight = 0;
+			in_o.push_back(int_temp);
+			int_temp = 0;
 		}
 	}
 }
-void IOOperate::read(vector<vector<char>>& char_t) 
+void IOOperate::read(vector<char>& char_t)
 {
-	char temp;
-	vector<char> char_o;
 	string stemp;
-	while (getline(in, stemp))
-	{
-		stringstream ss;
-		ss << stemp;
-		while (ss.peek() != EOF)
-		{
-			ss >> temp;
-			char_o.push_back(temp);
+	getline(in, stemp);
+	int sSize = stemp.size(), Flag = 0;
+	char ctemp;
+	for (int i = 0; i < sSize; i++) {
+		if (stemp[i] == '"' && Flag == 0) {
+			Flag = 1;
+			if (stemp[i + 1] != '"') {
+				ctemp = stemp[i++ + 1];
+			}
 		}
-		char_t.push_back(char_o);
-		char_o.clear();
+		else if (stemp[i] == '"' && Flag == 1) {
+			Flag = 0;
+			char_t.push_back(ctemp);
+		}
 	}
-}void IOOperate::read(string& string_o)
+}
+void IOOperate::read(string& string_o)
 {
 	getline(in, string_o);
 }
 void IOOperate::read(vector<string>& string_t)
 {
 	string stemp;
-	while (getline(in, stemp))
-	{
-		int sSize = stemp.size(), flag = 0, sStart = 0, sLength = 0;
-		for (int i = 0; i < sSize; i++) {
-			if (stemp[i] == '"' && flag == 0) {
-				flag = 1;
-				sStart = i + 1;
-			}
-			else if (stemp[i] == '"' && flag == 1) {
-				flag = 0;
-				string_t.push_back(stemp.substr(sStart, sLength));
-				sLength = 0;
-			}
-			else if (flag == 1) {
-				sLength++;
-			}
+	getline(in, stemp);
+
+	int sSize = stemp.size(), Flag = 0, sStart = 0, sLength = 0;
+	for (int i = 0; i < sSize; i++) {
+		if (stemp[i] == '"' && Flag == 0) {
+			Flag = 1;
+			sStart = i + 1;
+		}
+		else if (stemp[i] == '"' && Flag == 1) {
+			Flag = 0;
+			string_t.push_back(stemp.substr(sStart, sLength));
+			sLength = 0;
+		}
+		else if (Flag == 1) {
+			sLength++;
 		}
 	}
 }
 void IOOperate::read(vector<vector<string>>& string_t)
 {
 	string stemp;
-	while (getline(in, stemp))
-	{
-		vector<string> tempS;
-		int sSize = stemp.size(), firVflag = 0, secVflag = 0, sStart = 0, sLength = 0;
-		for (int i = 0; i < sSize; i++) {
-			if (stemp[i] == '[') {
-				firVflag++;
+	getline(in, stemp);
+	vector<string> tempS;
+	int sSize = stemp.size(), firVFlag = 0, secVFlag = 0, sStart = 0, sLength = 0;
+	for (int i = 0; i < sSize; i++) {
+		if (stemp[i] == '[') {
+			firVFlag++;
+		}
+		else if (stemp[i] == ']') {
+			firVFlag--;
+			if (firVFlag) {
+				string_t.push_back(tempS);
+				tempS.clear();
 			}
-			else if (stemp[i] == ']') {
-				firVflag--;
-				if (firVflag) {
-					string_t.push_back(tempS);
-					tempS.clear();
-				}
-			}
-			else if (stemp[i] == '"' && secVflag == 0) {
-				secVflag = 1;
-				sStart = i + 1;
-			}
-			else if (stemp[i] == '"' && secVflag == 1) {
-				secVflag = 0;
-				tempS.push_back(stemp.substr(sStart, sLength));
-				sLength = 0;
-			}
-			else if (secVflag == 1) {
-				sLength++;
-			}
+		}
+		else if (stemp[i] == '"' && secVFlag == 0) {
+			secVFlag = 1;
+			sStart = i + 1;
+		}
+		else if (stemp[i] == '"' && secVFlag == 1) {
+			secVFlag = 0;
+			tempS.push_back(stemp.substr(sStart, sLength));
+			sLength = 0;
+		}
+		else if (secVFlag == 1) {
+			sLength++;
 		}
 	}
 }
 void IOOperate::read(vector<ListNode*>& vh)
 {
-	int int_temp = 0;
 	string stemp;
-	while (getline(in, stemp))
-	{
-		int i = 0;
-		ListNode* head = new ListNode;
-		ListNode* node = head;
-		stringstream ss;
-		ss << stemp;
-		while (ss.peek() != EOF)
-		{
-			ss >> int_temp;
-			if (i == 0)
+	ListNode* head = new ListNode;
+	ListNode* node = head;
+	getline(in, stemp);
+	int int_temp = 0, sSize = stemp.size(), weight = 0, hdFlag = 0, firFlag = 0;
+	for (int i = 0; i < sSize; i++) {
+		if (stemp[i] == '[') {
+			firFlag++;
+		}
+		else if (stemp[i] == ']') {
+			firFlag--;
+			if (firFlag) {
+				ListNode* temp = new ListNode(int_temp);
+				temp->pre = node;
+				node->next = temp;
+				hdFlag = 0;
+				weight = 0;
+				int_temp = 0;
+				vh.push_back(head);
+				head = new ListNode;
+				node = head;
+
+			}
+		}
+		else if ('0' <= stemp[i] && '9' >= stemp[i]) {
+			int_temp = int_temp * 10 + (stemp[i] - '0');
+		}
+		else if (firFlag==2 && stemp[i] == ',') {
+			weight = 0;
+			if (hdFlag == 0)
 			{
 				node->val = int_temp;
-				i = 1;
+				hdFlag = 1;
 			}
 			else
 			{
-				ListNode* temp = new ListNode;
-				temp->val = int_temp;
+				ListNode* temp = new ListNode(int_temp);
+				temp->pre = node;
 				node->next = temp;
 				node = node->next;
 			}
+			int_temp = 0;
 		}
-		vh.push_back(head);
 	}
 }
 void IOOperate::read(ListNode*& head)
-{	
-	int i = 0, int_temp = 0;
+{
 	string stemp;
 	head = new ListNode;
-	ListNode *node = head;
+	ListNode* node = head;
 	getline(in, stemp);
-	stringstream ss;
-	ss << stemp;
-	while (ss.peek() != EOF)
-	{
-		ss >> int_temp;
-		if (i == 0)
-		{
-			node->val = int_temp;
-			i = 1;
+	int int_temp = 0, sSize = stemp.size(), weight = 0, hdFlag = 0;
+	for (int i = 0; i < sSize; i++) {
+		if ('0' <= stemp[i] && '9'>=stemp[i]) {
+			int_temp = int_temp * 10 + (stemp[i] - '0');
 		}
-		else
-		{
-			ListNode* temp = new ListNode;
-			temp->val = int_temp;
-			node->next = temp;
-			node = node->next;
+		else if (stemp[i] == ',' || stemp[i] == ']') {
+			weight = 0;
+			if (hdFlag == 0)
+			{
+				node->val = int_temp;
+				hdFlag = 1;
+			}
+			else
+			{
+				ListNode* temp = new ListNode(int_temp);
+				temp->pre = node;
+				node->next = temp;
+				node = node->next;
+			}
+			int_temp = 0;
 		}
 	}
 }
-
 void IOOperate::read(TreeNode*& root)
 {
-	int flag = -1,int_temp;
 	char char_temp;
 	string stemp;
 	root = new TreeNode(0);
 	TreeNode* node = root;
 	queue<TreeNode*> list;
-	while (getline(in, stemp))
-	{
-		stringstream ss;
-		ss << stemp;
-		while (ss.peek() != EOF)
-		{
-			ss >> char_temp;
-			int_temp = char_temp - '0';
-			if (flag == -1)
+	getline(in, stemp);
+	int int_temp = 0, sSize = stemp.size(), weight = 0, rtFlag = 0, lrFlag = 1;
+	for (int i = 0; i < sSize; i++) {
+		if ('0' <= stemp[i] && '9'>=stemp[i]) {
+			int_temp = int_temp * 10 + (stemp[i] - '0');
+		}
+		else if (stemp[i] == 'N' || stemp[i] == 'n') {
+			if ((stemp[i + 1] == 'U' || stemp[i + 1] == 'u') && (stemp[i + 2] == 'L' || stemp[i + 2] == 'l') && (stemp[i + 3] == 'L' || stemp[i + 3] == 'l')) {
+				if (lrFlag) {
+					lrFlag = 0;
+				}else{
+					if (!list.empty()) {
+						node = list.front();
+						list.pop();
+					}
+					lrFlag = 1;
+				}
+				i = i + 4;
+			}
+		}
+		else if (stemp[i] == ',' || stemp[i] == ']') {
+			weight = 0;
+			if (rtFlag == 0)
 			{
 				node->val = int_temp;
-				list.push(node);
-				flag = 0;
+				rtFlag = 1;
 			}
 			else
 			{
 				TreeNode* temp = new TreeNode(int_temp);
-				if (flag) {
-					if (char_temp != '$') {
-						node->right = temp;
-						list.push(temp);
-					}
-					list.pop();
+				list.push(temp);
+				if (lrFlag) {
+					node->left = temp;
+					lrFlag = 0;
 				}
 				else {
-					node = list.front();
-					if (char_temp != '$'){
-						node->left = temp;
-						list.push(temp);
+					node->right = temp;
+					if (!list.empty()) {
+						node = list.front();
+						list.pop();
 					}
+					lrFlag = 1;
 				}
-				flag = !flag;
 			}
+			int_temp = 0;
 		}
 	}
 }
@@ -284,14 +309,15 @@ void IOOperate::write(vector<vector<int>>& int_t)
 	}
 	out << "]" << endl;
 }
-void IOOperate::write(vector<vector<char>>& char_t)
+void IOOperate::write(vector<char>& char_t)
 {
-	for (auto i : char_t)
+	out << "[";
+	int size = char_t.size();
+	for (int i = 0; i < size; i++)
 	{
-		for (auto j : i)
-			out << j << ' ';
-		out << endl;
+		out << "\"" << char_t[i] << "\"" << (i == size - 1 ? "]" : ",");
 	}
+	out << endl;
 }
 void IOOperate::write(vector<string>& string_t)
 {
@@ -333,9 +359,10 @@ void IOOperate::write(bool& b, string TRUE, string FALSE)
 void IOOperate::write(ListNode* head)
 {
 	ListNode *temp = head;
+	out << "[";
 	while (true)
 	{
-		out << temp->val << " ";
+		out << temp->val << (temp->next == nullptr ? "]" : ",");
 		if (temp->next == nullptr)
 		{
 			break;
@@ -359,40 +386,60 @@ void IOOperate::write(ListNode* head)
 
 void IOOperate::write(TreeNode* root)
 {
-	int num = 1,eflag = 0;
+	int num = 1, allEmpty = 1, rtFlag = 0;
 	queue<TreeNode*> list;
 	list.push(root);
-	while (list.size()) {
-		for (int i = 0; i < num; i++) {
-			if (list.front() != nullptr) {
-				out << list.front()->val << ' ';
-				if (list.front()->left != nullptr) {
-					list.push(list.front()->left);
+	out << "[";
+	while (!list.empty())
+	{
+		int n = list.size();
+		allEmpty = 1;
+		rtFlag = 0;
+		out << "[";
+		for (int i = 0; i < n; i++)
+		{
+			TreeNode* t = list.front();
+			list.pop();
+			if (t != nullptr) {
+				if (rtFlag) {
+					out << "," << t->val;
+				}
+				else {
+					out << t->val;
+					rtFlag = 1;
+				}
+				if (t->left) {
+					list.push(t->left);
+					allEmpty = 0;
 				}
 				else {
 					list.push(nullptr);
-					eflag++;
 				}
-				if (list.front()->right != nullptr) {
-					list.push(list.front()->right);
+				if (t->right) {
+					list.push(t->right);
+					allEmpty = 0;
 				}
 				else {
 					list.push(nullptr);
-					eflag++;
 				}
 			}
 			else {
-				out << '$'<< ' ';
-				list.push(nullptr);
-				list.push(nullptr);
-				eflag++;
+				if (rtFlag) {
+					out << ",null";
+				}
+				else {
+					out << "null";
+					rtFlag = 1;
+				}
 			}
-			list.pop();
 		}
-		num = list.size();
-		if (eflag == num) {
+		out << "]";
+		if (allEmpty) {
 			break;
 		}
-		out << endl;
+		else {
+			out << ",";
+		}
 	}
+	out <<"]" << endl;
 }

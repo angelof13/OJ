@@ -7,15 +7,17 @@
 using namespace std;
 struct ListNode {
 	int val;
+	ListNode* pre;
 	ListNode* next;
-	ListNode() :val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
+	ListNode() :val(0), pre(nullptr), next(nullptr) {}
+	ListNode(int x) : val(x), pre(nullptr), next(nullptr) {}
 };
 
 struct TreeNode {
 	int val;
 	TreeNode* left;
 	TreeNode* right;
+	TreeNode() : val(0), left(nullptr), right(nullptr) {}
 	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
@@ -28,11 +30,12 @@ public:
 	string s1, s2, s3;
 	vector<int> vi1, vi2, vi3;
 	vector<vector<int>> vvi1, vvi2, vvi3;
+	vector<char> vc1;
 	vector<string> vs1, vs2, vs3;
 	vector<vector<string>> vvs1, vvs2, vvs3;
-	vector<ListNode*> vh;
-	ListNode* head;
-	TreeNode* root;
+	vector<ListNode*> vh1,vh2;
+	ListNode* head1, head2, head3;
+	TreeNode* root1, root2, root3;
 };
 #endif
 #pragma once
