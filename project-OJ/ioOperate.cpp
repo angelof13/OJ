@@ -17,33 +17,53 @@ void IOOperate::read(int& i)
 }
 void IOOperate::read(vector<int>& int_o)
 {
-	int in_temp;
 	string stemp;
-	stringstream ss;
-	getline(in, stemp);
-	ss << stemp;
-	while (ss.peek() != EOF)
+	while (getline(in, stemp))
 	{
-		ss >> in_temp;
-		int_o.push_back(in_temp);
+		int in_temp = 0, sSize = stemp.size(), weight = 0;
+		for (int i = 0; i < sSize; i++) {
+			if (stemp[i] != ',' && stemp[i] != '[' && stemp[i] != ']') {
+				in_temp = in_temp * 10 + (stemp[i] - '0');
+			}
+			else if (stemp[i] == ',' || stemp[i] == ']') {
+				weight = 0;
+				int_o.push_back(in_temp);
+				in_temp = 0;
+			}
+		}
 	}
 }
 void IOOperate::read(vector<vector<int>>& int_t) 
 {
-	int in_temp;
-	vector<int> in_o;
 	string stemp;
 	while (getline(in, stemp))
 	{
-		stringstream ss;
-		ss << stemp;
-		while (ss.peek() != EOF)
-		{
-			ss >> in_temp;
-			in_o.push_back(in_temp);
+		vector<int> in_o;
+		int in_temp = 0, firVflag = 0, sSize = stemp.size(), weight = 0;
+		for (int i = 0; i < sSize; i++) {
+			if (stemp[i] == '[') {
+				firVflag++;
+			}
+			else if (stemp[i] == ']') {
+				firVflag--;
+				if (firVflag) {
+					weight = 0;
+					in_o.push_back(in_temp);
+					in_temp = 0;
+
+					int_t.push_back(in_o);
+					in_o.clear();
+				}
+			}
+			else if (firVflag==2 && stemp[i] != ',') {
+				in_temp = in_temp * 10 + (stemp[i] - '0');
+			}
+			else if (firVflag == 2 && stemp[i] == ',') {
+				weight = 0;
+				in_o.push_back(in_temp);
+				in_temp = 0;
+			}
 		}
-		int_t.push_back(in_o);
-		in_o.clear();
 	}
 }
 void IOOperate::read(vector<vector<char>>& char_t) 
@@ -72,7 +92,54 @@ void IOOperate::read(vector<string>& string_t)
 	string stemp;
 	while (getline(in, stemp))
 	{
-		string_t.push_back(stemp);
+		int sSize = stemp.size(), flag = 0, sStart = 0, sLength = 0;
+		for (int i = 0; i < sSize; i++) {
+			if (stemp[i] == '"' && flag == 0) {
+				flag = 1;
+				sStart = i + 1;
+			}
+			else if (stemp[i] == '"' && flag == 1) {
+				flag = 0;
+				string_t.push_back(stemp.substr(sStart, sLength));
+				sLength = 0;
+			}
+			else if (flag == 1) {
+				sLength++;
+			}
+		}
+	}
+}
+void IOOperate::read(vector<vector<string>>& string_t)
+{
+	string stemp;
+	while (getline(in, stemp))
+	{
+		vector<string> tempS;
+		int sSize = stemp.size(), firVflag = 0, secVflag = 0, sStart = 0, sLength = 0;
+		for (int i = 0; i < sSize; i++) {
+			if (stemp[i] == '[') {
+				firVflag++;
+			}
+			else if (stemp[i] == ']') {
+				firVflag--;
+				if (firVflag) {
+					string_t.push_back(tempS);
+					tempS.clear();
+				}
+			}
+			else if (stemp[i] == '"' && secVflag == 0) {
+				secVflag = 1;
+				sStart = i + 1;
+			}
+			else if (stemp[i] == '"' && secVflag == 1) {
+				secVflag = 0;
+				tempS.push_back(stemp.substr(sStart, sLength));
+				sLength = 0;
+			}
+			else if (secVflag == 1) {
+				sLength++;
+			}
+		}
 	}
 }
 void IOOperate::read(vector<ListNode*>& vh)
@@ -179,34 +246,43 @@ void IOOperate::read(TreeNode*& root)
 
 void IOOperate::write(int int_o)
 {
-	out << int_o;
+	out << "[" << int_o << "]";
 }
 
 void IOOperate::write(double double_o)
 {
-	out << double_o;
+	out << "[" << double_o << "]";
 }
 
 void IOOperate::write(string s)
 {
-	out << s;
+	out << "[\"" << s << "\"]";
 }
 
 void IOOperate::write(vector<int>& int_o)
 {
-	for (auto i : int_o)
+	out << "[";
+	int size = int_o.size();
+	for (int i = 0; i < size; i++)
 	{
-		out << i << " ";
+		out << int_o[i] << (i == size - 1 ? "" : ",");
 	}
+	out << "]" << endl;
 }
 void IOOperate::write(vector<vector<int>>& int_t) 
 {
-	for (auto i : int_t)
+	out << "[";
+	int size = int_t.size();
+	for (int i = 0; i < size; i++)
 	{
-		for (auto j : i)
-			out << j << ' ';
-		out << endl;
+		int iSize = int_t[i].size();
+		out << "[";
+		for (int j = 0; j < iSize; j++) {
+			out << int_t[i][j] << (j == iSize - 1 ? "" : ",");
+		}
+		out << (i == size - 1 ? "]" : "],");
 	}
+	out << "]" << endl;
 }
 void IOOperate::write(vector<vector<char>>& char_t)
 {
@@ -219,10 +295,29 @@ void IOOperate::write(vector<vector<char>>& char_t)
 }
 void IOOperate::write(vector<string>& string_t)
 {
-	for (auto i : string_t)
+	out << "[";
+	int size = string_t.size();
+	for (int i = 0; i < size; i++)
 	{
-			out << i << endl;
+		out << "\"" << string_t[i] << "\"" << (i == size - 1 ? "]" : ",");
 	}
+	out << endl;
+}
+void IOOperate::write(vector<vector<string>>& string_t)
+{
+	out << "[";
+	int size = string_t.size();
+	for (int i = 0; i < size; i++)
+	{
+		int iSize = string_t[i].size();
+		out << "[";
+		for (int j = 0; j < iSize; j++)
+		{
+			out << "\"" << string_t[i][j] << "\"" << (j == iSize - 1 ? "" : ",");
+		}
+		out << (i == size - 1 ? "]" : "],");
+	}
+	out << "]" << endl;
 }
 
 void IOOperate::write(bool& b)

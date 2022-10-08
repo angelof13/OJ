@@ -22,6 +22,7 @@ public:
 	void read(vector<vector<char>>& char_t);
 	void read(string& string_o);
 	void read(vector<string>& string_t);
+	void read(vector<vector<string>>& string_t);
 	void read(vector<ListNode*>& vh);
 	void read(ListNode*& head);
 	void read(TreeNode*& root);
@@ -33,6 +34,7 @@ public:
 	void write(vector<vector<int>>& int_t);
 	void write(vector<vector<char>>& char_t);
 	void write(vector<string>& string_t);
+	void write(vector<vector<string>>& string_t);
 	void write(bool& b);
 	void write(bool& b,string TRUE,string FALSE);
 	void write(ListNode* head);

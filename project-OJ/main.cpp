@@ -6,16 +6,13 @@
 #include <algorithm>
 using namespace std;
 
+#define M_P_READ i1
+#define M_P_WRITE c1
+
 class Solution {
 public:
-	int maxSubArray(vector<int>& nums) {
-		int temp = 0,max = nums[0];
-		for (auto i : nums)
-		{
-			temp = temp > 0 ? temp + i : i;
-			max = max > temp ? max : temp;
-		}
-		return max;
+	vector<vector<string>> groupAnagrams(vector<string>& strs) {
+
 	}
 };
 int main(void)
@@ -23,9 +20,9 @@ int main(void)
 	Solution a;
 	IOOperate io;
 	Parameter p;
-	io.read(p.vi1);
-	p.i1 = a.maxSubArray(p.vi1);
-	io.write(p.i1);
+	io.read(p.M_P_READ);
+	//p.M_P_WRITE = a.groupAnagrams(p.vs1);
+	io.write(p.M_P_WRITE);
 	return 0;
 }
 
