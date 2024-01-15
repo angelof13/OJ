@@ -2,7 +2,6 @@
 #define __PARAMETER
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <cstring>
 using namespace std;
 struct ListNode {
@@ -23,7 +22,7 @@ struct TreeNode {
 
 class Parameter {
 public:
-	bool b;
+	bool b1;
 	int i1, i2, i3;
 	double d1, d2, d3;
 	char c1, c2, c3;

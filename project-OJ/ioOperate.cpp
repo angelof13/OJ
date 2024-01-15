@@ -213,6 +213,7 @@ void IOOperate::read(ListNode*& head)
 		}
 	}
 }
+//construct tree abide by root-leftChild-rightChild sequence
 void IOOperate::read(TreeNode*& root)
 {
 	char char_temp;
@@ -296,7 +297,7 @@ void IOOperate::write(vector<int>& int_o)
 }
 void IOOperate::write(vector<vector<int>>& int_t) 
 {
-	out << "[";
+	out << "["<<endl;
 	int size = int_t.size();
 	for (int i = 0; i < size; i++)
 	{
@@ -305,7 +306,7 @@ void IOOperate::write(vector<vector<int>>& int_t)
 		for (int j = 0; j < iSize; j++) {
 			out << int_t[i][j] << (j == iSize - 1 ? "" : ",");
 		}
-		out << (i == size - 1 ? "]" : "],");
+		out << (i == size - 1 ? "]" : "],") << endl;
 	}
 	out << "]" << endl;
 }
