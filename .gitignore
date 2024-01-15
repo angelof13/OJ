@@ -30,7 +30,7 @@
 *.exe
 *.out
 *.app
-/.vs/project-OJ/v16
+/.vs/
 /project-OJ/project-OJ.vcxproj.user
 /project-OJ/project-OJ.vcxproj.filters
 /project-OJ - 副本
