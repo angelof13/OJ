@@ -19,13 +19,13 @@ void IOOperate::read(vector<int>& int_o)
 {
 	string stemp;
 	getline(in, stemp);
-	int int_temp = 0, sSize = stemp.size(), weight = 0;
+	int int_temp = 0;
+	auto sSize = stemp.size();
 	for (int i = 0; i < sSize; i++) {
 		if ('0' <= stemp[i] && '9'>=stemp[i]) {
 			int_temp = int_temp * 10 + (stemp[i] - '0');
 		}
 		else if (stemp[i] == ',' || stemp[i] == ']') {
-			weight = 0;
 			int_o.push_back(int_temp);
 			int_temp = 0;
 		}
@@ -36,7 +36,8 @@ void IOOperate::read(vector<vector<int>>& int_t)
 	string stemp;
 	getline(in, stemp);
 	vector<int> in_o;
-	int int_temp = 0, firVFlag = 0, sSize = stemp.size(), weight = 0;
+	int int_temp = 0, firVFlag = 0;
+	auto sSize = stemp.size();
 	for (int i = 0; i < sSize; i++) {
 		if (stemp[i] == '[') {
 			firVFlag++;
@@ -44,7 +45,6 @@ void IOOperate::read(vector<vector<int>>& int_t)
 		else if (stemp[i] == ']') {
 			firVFlag--;
 			if (firVFlag) {
-				weight = 0;
 				in_o.push_back(int_temp);
 				int_temp = 0;
 
@@ -56,7 +56,6 @@ void IOOperate::read(vector<vector<int>>& int_t)
 			int_temp = int_temp * 10 + (stemp[i] - '0');
 		}
 		else if (firVFlag == 2 && stemp[i] == ',') {
-			weight = 0;
 			in_o.push_back(int_temp);
 			int_temp = 0;
 		}
@@ -66,7 +65,8 @@ void IOOperate::read(vector<char>& char_t)
 {
 	string stemp;
 	getline(in, stemp);
-	int sSize = stemp.size(), Flag = 0;
+	int Flag = 0;
+	auto sSize = stemp.size();
 	char ctemp;
 	for (int i = 0; i < sSize; i++) {
 		if (stemp[i] == '"' && Flag == 0) {
@@ -83,14 +83,16 @@ void IOOperate::read(vector<char>& char_t)
 }
 void IOOperate::read(string& string_o)
 {
-	getline(in, string_o);
+	string temp;
+	getline(in, temp);
+	string_o=string(temp.cbegin()+1, temp.cend()-1);
 }
 void IOOperate::read(vector<string>& string_t)
 {
 	string stemp;
 	getline(in, stemp);
-
-	int sSize = stemp.size(), Flag = 0, sStart = 0, sLength = 0;
+	auto sSize = stemp.size();
+	int Flag = 0, sStart = 0, sLength = 0;
 	for (int i = 0; i < sSize; i++) {
 		if (stemp[i] == '"' && Flag == 0) {
 			Flag = 1;
@@ -111,7 +113,8 @@ void IOOperate::read(vector<vector<string>>& string_t)
 	string stemp;
 	getline(in, stemp);
 	vector<string> tempS;
-	int sSize = stemp.size(), firVFlag = 0, secVFlag = 0, sStart = 0, sLength = 0;
+	auto sSize = stemp.size();
+	int firVFlag = 0, secVFlag = 0, sStart = 0, sLength = 0;
 	for (int i = 0; i < sSize; i++) {
 		if (stemp[i] == '[') {
 			firVFlag++;
@@ -143,7 +146,8 @@ void IOOperate::read(vector<ListNode*>& vh)
 	ListNode* head = new ListNode;
 	ListNode* node = head;
 	getline(in, stemp);
-	int int_temp = 0, sSize = stemp.size(), weight = 0, hdFlag = 0, firFlag = 0;
+	auto sSize = stemp.size();
+	int int_temp = 0, weight = 0, hdFlag = 0, firFlag = 0;
 	for (int i = 0; i < sSize; i++) {
 		if (stemp[i] == '[') {
 			firFlag++;
@@ -190,7 +194,8 @@ void IOOperate::read(ListNode*& head)
 	head = new ListNode;
 	ListNode* node = head;
 	getline(in, stemp);
-	int int_temp = 0, sSize = stemp.size(), weight = 0, hdFlag = 0;
+	auto sSize = stemp.size();
+	int int_temp = 0, weight = 0, hdFlag = 0;
 	for (int i = 0; i < sSize; i++) {
 		if ('0' <= stemp[i] && '9'>=stemp[i]) {
 			int_temp = int_temp * 10 + (stemp[i] - '0');
@@ -216,13 +221,13 @@ void IOOperate::read(ListNode*& head)
 //construct tree abide by root-leftChild-rightChild sequence
 void IOOperate::read(TreeNode*& root)
 {
-	char char_temp;
 	string stemp;
 	root = new TreeNode(0);
 	TreeNode* node = root;
 	queue<TreeNode*> list;
 	getline(in, stemp);
-	int int_temp = 0, sSize = stemp.size(), weight = 0, rtFlag = 0, lrFlag = 1;
+	auto  sSize = stemp.size();
+	int int_temp = 0, weight = 0, rtFlag = 0, lrFlag = 1;
 	for (int i = 0; i < sSize; i++) {
 		if ('0' <= stemp[i] && '9'>=stemp[i]) {
 			int_temp = int_temp * 10 + (stemp[i] - '0');
@@ -270,17 +275,7 @@ void IOOperate::read(TreeNode*& root)
 	}
 }
 
-void IOOperate::write(int int_o)
-{
-	out << "[" << int_o << "]";
-}
-
-void IOOperate::write(double double_o)
-{
-	out << "[" << double_o << "]";
-}
-
-void IOOperate::write(string s)
+void IOOperate::write(string& s)
 {
 	out << "[\"" << s << "\"]";
 }
@@ -288,75 +283,51 @@ void IOOperate::write(string s)
 void IOOperate::write(vector<int>& int_o)
 {
 	out << "[";
-	int size = int_o.size();
-	for (int i = 0; i < size; i++)
+	for (auto i = int_o.cbegin();i < int_o.cend();i++)
 	{
-		out << int_o[i] << (i == size - 1 ? "" : ",");
+		out << *i;
+		if (i != int_o.end() - 1) {
+			out << ",";
+		}
 	}
 	out << "]" << endl;
 }
+
 void IOOperate::write(vector<vector<int>>& int_t) 
 {
 	out << "["<<endl;
-	int size = int_t.size();
-	for (int i = 0; i < size; i++)
+	for (auto i = int_t.cbegin(); i < int_t.cend(); i++)
 	{
-		int iSize = int_t[i].size();
 		out << "[";
-		for (int j = 0; j < iSize; j++) {
-			out << int_t[i][j] << (j == iSize - 1 ? "" : ",");
+		for (auto j = (*i).cbegin(); j < (*i).cend(); j++) {
+			out << *j << (j == (*i).cend() - 1 ? "" : ",");
 		}
-		out << (i == size - 1 ? "]" : "],") << endl;
+		out << (i == int_t.cend() - 1 ? "]" : "],");
 	}
 	out << "]" << endl;
-}
-void IOOperate::write(vector<char>& char_t)
-{
-	out << "[";
-	int size = char_t.size();
-	for (int i = 0; i < size; i++)
-	{
-		out << "\"" << char_t[i] << "\"" << (i == size - 1 ? "]" : ",");
-	}
-	out << endl;
-}
-void IOOperate::write(vector<string>& string_t)
-{
-	out << "[";
-	int size = string_t.size();
-	for (int i = 0; i < size; i++)
-	{
-		out << "\"" << string_t[i] << "\"" << (i == size - 1 ? "]" : ",");
-	}
-	out << endl;
 }
 void IOOperate::write(vector<vector<string>>& string_t)
 {
 	out << "[";
-	int size = string_t.size();
-	for (int i = 0; i < size; i++)
+	for (auto i = string_t.cbegin(); i < string_t.cend(); i++)
 	{
-		int iSize = string_t[i].size();
 		out << "[";
-		for (int j = 0; j < iSize; j++)
+		for (auto j = (*i).cbegin(); j < (*i).cend(); j++)
 		{
-			out << "\"" << string_t[i][j] << "\"" << (j == iSize - 1 ? "" : ",");
+			out << "\"" << *j << "\"" << (j == (*i).cend() - 1 ? "" : ",");
 		}
-		out << (i == size - 1 ? "]" : "],");
+		out << (i == string_t.cend() - 1 ? "]" : "],");
 	}
 	out << "]" << endl;
 }
-
 void IOOperate::write(bool& b)
 {
 	out << (b ? "TRUE" : "FALSE") << endl;
 }
-
 void IOOperate::write(bool& b, string TRUE, string FALSE)
 {
 	out << (b ? TRUE : FALSE) << endl;
 }
-
 void IOOperate::write(ListNode* head)
 {
 	ListNode *temp = head;
@@ -384,7 +355,6 @@ void IOOperate::write(ListNode* head)
 
 	}
 }
-
 void IOOperate::write(TreeNode* root)
 {
 	int num = 1, allEmpty = 1, rtFlag = 0;
@@ -393,7 +363,7 @@ void IOOperate::write(TreeNode* root)
 	out << "[";
 	while (!list.empty())
 	{
-		int n = list.size();
+		auto n = list.size();
 		allEmpty = 1;
 		rtFlag = 0;
 		out << "[";
