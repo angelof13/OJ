@@ -3,6 +3,7 @@
 #include <queue>
 #include <stack>
 #include <array>
+#include <unordered_map>
 #include <algorithm>
 #include <functional>
 
@@ -13,8 +14,8 @@ using namespace std;
 
 class Solution {
 public:
-	vector<int> findSubstring(string s, vector<string>& words) {
-
+	int func(int target) {
+		return 0;
 	}
 };
 
@@ -23,12 +24,12 @@ void process(IWRITE& iWrite, IREAD&... iReads) {
 	IOOperate io;
 	Solution a;
 	io.IORead(iReads...);
-	iWrite = a.findSubstring(iReads...);
+	iWrite = a.func(iReads...);
 	io.IOWrite(iWrite);
 };
 int main(void)
 {
 	Parameter p;
-	process(p.vi2, p.s1,p.vi1);
+	process(p.i2, p.i1);
 	return 0;
 };

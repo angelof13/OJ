@@ -13,7 +13,9 @@ IOOperate::~IOOperate()
 
 void IOOperate::read(int& i)
 {
-	in >> i;
+	in >> i; 
+	string trash;
+	getline(in, trash);
 }
 void IOOperate::read(vector<int>& int_o)
 {
