@@ -149,44 +149,53 @@ void IOOperate::read(vector<ListNode*>& vh)
 	ListNode* node = head;
 	getline(in, stemp);
 	auto sSize = stemp.size();
-	int int_temp = 0, weight = 0, hdFlag = 0, firFlag = 0;
+	int int_temp = 0, firFlag = 0;
+	bool hdFlag = false, iFlag=false;
 	for (int i = 0; i < sSize; i++) {
 		if (stemp[i] == '[') {
 			firFlag++;
 		}
 		else if (stemp[i] == ']') {
 			firFlag--;
-			if (firFlag) {
-				ListNode* temp = new ListNode(int_temp);
-				temp->pre = node;
-				node->next = temp;
-				hdFlag = 0;
-				weight = 0;
+			if (firFlag != 0) {
+				if (iFlag) {
+					ListNode* temp = new ListNode(int_temp);
+					temp->pre = node;
+					node->next = temp;
+				}
+				if (!hdFlag) {
+					delete head;
+					head = nullptr;
+				}
 				int_temp = 0;
+				hdFlag = false;
+				iFlag = false;
 				vh.push_back(head);
 				head = new ListNode;
 				node = head;
-
 			}
 		}
 		else if ('0' <= stemp[i] && '9' >= stemp[i]) {
 			int_temp = int_temp * 10 + (stemp[i] - '0');
+			iFlag = true;
 		}
 		else if (firFlag==2 && stemp[i] == ',') {
-			weight = 0;
-			if (hdFlag == 0)
+			if (!hdFlag)
 			{
 				node->val = int_temp;
-				hdFlag = 1;
+				hdFlag = true;
 			}
 			else
 			{
-				ListNode* temp = new ListNode(int_temp);
-				temp->pre = node;
-				node->next = temp;
-				node = node->next;
+				if (iFlag) {
+					ListNode* temp = new ListNode(int_temp);
+					temp->pre = node;
+					node->next = temp;
+					node = node->next;
+				}
 			}
 			int_temp = 0;
+			iFlag = false;
 		}
 	}
 }
@@ -197,27 +206,35 @@ void IOOperate::read(ListNode*& head)
 	ListNode* node = head;
 	getline(in, stemp);
 	auto sSize = stemp.size();
-	int int_temp = 0, weight = 0, hdFlag = 0;
+	int int_temp = 0;
+	bool hdFlag = false, iFlag = false;
 	for (int i = 0; i < sSize; i++) {
 		if ('0' <= stemp[i] && '9'>=stemp[i]) {
 			int_temp = int_temp * 10 + (stemp[i] - '0');
+			iFlag = true;
 		}
 		else if (stemp[i] == ',' || stemp[i] == ']') {
-			weight = 0;
-			if (hdFlag == 0)
+			if (!hdFlag)
 			{
 				node->val = int_temp;
-				hdFlag = 1;
+				hdFlag = true;
 			}
 			else
 			{
-				ListNode* temp = new ListNode(int_temp);
-				temp->pre = node;
-				node->next = temp;
-				node = node->next;
+				if (iFlag) {
+					ListNode* temp = new ListNode(int_temp);
+					temp->pre = node;
+					node->next = temp;
+					node = node->next;
+				}
 			}
 			int_temp = 0;
+			iFlag = false;
 		}
+	}
+	if (!hdFlag) {
+		delete head;
+		head = nullptr;
 	}
 }
 //construct tree abide by root-leftChild-rightChild sequence
@@ -334,27 +351,21 @@ void IOOperate::write(ListNode* head)
 {
 	ListNode *temp = head;
 	out << "[";
-	while (true)
+	while (temp != nullptr)
 	{
-		out << temp->val << (temp->next == nullptr ? "]" : ",");
+		out << temp->val << (temp->next == nullptr ? "" : ",");
 		if (temp->next == nullptr)
 		{
 			break;
 		}
 		temp = temp->next;
 	}
-	out << endl;
-	while (true)
+	out << "]" << endl;
+	while (head != nullptr)
 	{
 		temp = head;
-		if (temp->next == nullptr)
-		{
-			delete temp;
-			break;
-		}
 		head = head->next;
 		delete temp;
-
 	}
 }
 void IOOperate::write(TreeNode* root)
