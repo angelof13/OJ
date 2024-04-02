@@ -361,12 +361,6 @@ void IOOperate::write(ListNode* head)
 		temp = temp->next;
 	}
 	out << "]" << endl;
-	while (head != nullptr)
-	{
-		temp = head;
-		head = head->next;
-		delete temp;
-	}
 }
 void IOOperate::write(TreeNode* root)
 {

@@ -34,6 +34,42 @@ public:
 	vector<ListNode*> vh1,vh2;
 	ListNode* head1=nullptr, *head2 = nullptr, *head3 = nullptr;
 	TreeNode* root1 = nullptr, *root2 = nullptr, *root3 = nullptr;
+	
+	~Parameter() {
+		function<void(ListNode*)> delL = [](ListNode* head) {
+			while (head != nullptr)
+			{
+				ListNode* temp = head;
+				head = head->next;
+				delete temp;
+			}
+			};
+		delL(head1);
+		delL(head2);
+		delL(head3);
+		for (auto vh1i : vh1) {
+			delL(vh1i);
+		}
+		for (auto vh2i : vh1) {
+			delL(vh2i);
+		}
+		function<void(TreeNode*)> delT = [&delT](TreeNode* root) {
+			if (root != nullptr) {
+				if (root->left != nullptr) {
+					TreeNode* temp = root->left;
+					delT(temp);
+				}
+				if (root->right != nullptr) {
+					TreeNode* temp = root->right;
+					delT(temp);
+				}
+				delete root;
+			}
+			};
+		delT(root1);
+		delT(root2);
+		delT(root3);
+	}
 };
 #endif
 #pragma once
